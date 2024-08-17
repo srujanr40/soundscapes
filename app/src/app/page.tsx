@@ -1,5 +1,4 @@
 import NavbarDemo from '../components/NavigationBar/navigationbar'
-import Card from '../components/Card/card'
 import HoverCard from '../components/HoverCard/hovercard'
 import Footer from '../components/Footer/footer'
 import FloatingCard from '../components/FloatingCard/floating-card'
