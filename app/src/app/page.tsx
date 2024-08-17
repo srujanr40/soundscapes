@@ -1,6 +1,8 @@
 import NavbarDemo from '../components/NavigationBar/navigationbar'
 import Card from '../components/Card/card'
+import HoverCard from '../components/HoverCard/hovercard'
 import Footer from '../components/Footer/footer'
+import { ModeToggle } from '../components/DarkModeToggle/dark-mode-toggle'
 
 export default function Home() {
   return (
@@ -14,12 +16,9 @@ export default function Home() {
           text here
         </h1>
       </div>
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      <HoverCard />
       <Footer />
+      <ModeToggle />
     </div>
   )
 }
