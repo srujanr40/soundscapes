@@ -14,7 +14,6 @@ export default function Home() {
       </div>
       <HoverCard />
       <Footer />
-      <ModeToggle />
     </div>
   )
 }
