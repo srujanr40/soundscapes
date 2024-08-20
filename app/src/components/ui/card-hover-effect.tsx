@@ -65,29 +65,35 @@ export const Card = ({
   hovered,
   backgroundImage,
 }: {
-  className?: string
-  children: React.ReactNode
-  hovered?: boolean
-  backgroundImage?: string
+  className?: string;
+  children: React.ReactNode;
+  hovered?: boolean;
+  backgroundImage?: string;
 }) => {
   return (
     <div
       className={cn(
-        'rounded-2xl h-full w-full p-4 overflow-hidden bg-gray-200 dark:bg-black border-2 border-transparent dark:border-white/[0.2] dark:group-hover:border-fuchsia-300 group-hover:border-fuchsia-400 relative z-20',
+        "rounded-2xl h-full w-full p-4 overflow-hidden bg-gray-200 dark:bg-black border-2 border-transparent dark:border-white/[0.2] dark:group-hover:border-fuchsia-300 group-hover:border-fuchsia-400 relative z-20",
         className
       )}
-      style={{
-        backgroundImage: hovered ? `url('${backgroundImage}')` : undefined,
-        backgroundSize: hovered ? 'cover' : undefined,
-        backgroundPosition: hovered ? 'center' : undefined,
-      }}
     >
+      <div
+        className={cn(
+          "absolute inset-0 transition-opacity duration-300 ease-in-out",
+          hovered ? "opacity-100" : "opacity-0"
+        )}
+        style={{
+          backgroundImage: `url('${backgroundImage}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      ></div>
       <div className="relative z-50">
         <div className="p-4">{children}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const CardTitle = ({
   className,
