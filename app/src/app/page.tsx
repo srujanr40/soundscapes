@@ -2,6 +2,7 @@ import NavbarDemo from '../components/NavigationBar/navigationbar'
 import HoverCard from '../components/HoverCard/hovercard'
 import Footer from '../components/Footer/footer'
 import TitleCard from '../components/TitleCard/title-card'
+import Dock from '../components/Dock/dock'
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <TitleCard />
       </div>
       <HoverCard />
+      <Dock />
       <Footer />
     </div>
   )
