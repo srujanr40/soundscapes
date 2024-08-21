@@ -5,7 +5,7 @@ import React from 'react'
 import { CardBody, CardContainer, CardItem } from '../ui/3d-card'
 import Link from 'next/link'
 
-export default function FloatingCard() {
+export default function TitleCard() {
   return (
     <CardContainer className="inter-var">
       <CardBody className="bg-transparent relative group/card w-auto sm:w-[30rem] h-auto rounded-xl">
