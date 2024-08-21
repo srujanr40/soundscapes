@@ -19,7 +19,7 @@ export default function FloatingCard() {
         </CardItem>
         <div className="flex justify-center items-center">
           <CardItem translateZ="30">
-            <h2 className="text-center text-xl sm:text-3xl font-medium relative z-20 bg-clip-text text-transparent bg-gradient-to-br from-slate-300 to-slate-700">
+            <h2 className="text-center text-xl sm:text-3xl font-medium relative z-20 bg-clip-text text-transparent bg-gradient-to-br from-neutral-300 to-neutral-700">
               head in the clouds
             </h2>
           </CardItem>
