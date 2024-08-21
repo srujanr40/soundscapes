@@ -10,7 +10,7 @@ export default function Home() {
       <div className="absolute pointer-events-none inset-0 flex dark:bg-neutral-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
       <NavbarDemo />
       <div className="flex flex-col justify-center items-center h-[75vh]">
-      <TitleCard />
+        <TitleCard />
       </div>
       <HoverCard />
       <Dock />

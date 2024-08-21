@@ -1,7 +1,7 @@
 'use client'
 
-import React from "react";
-import { FloatingDock } from "@/components/ui/floating-dock";
+import React from 'react'
+import { FloatingDock } from '@/components/ui/floating-dock'
 import {
   IconBrandGithub,
   IconBrandX,
@@ -9,35 +9,35 @@ import {
   IconHome,
   IconNewSection,
   IconTerminal2,
-} from "@tabler/icons-react";
-import Image from "next/image";
+} from '@tabler/icons-react'
+import Image from 'next/image'
 
 export default function Dock() {
   const links = [
     {
-      title: "Home",
+      title: 'Home',
       icon: (
         <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: '#',
     },
 
     {
-      title: "Products",
+      title: 'Products',
       icon: (
         <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: '#',
     },
     {
-      title: "Components",
+      title: 'Components',
       icon: (
         <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: '#',
     },
     {
-      title: "Aceternity UI",
+      title: 'Aceternity UI',
       icon: (
         <Image
           src="https://assets.aceternity.com/logo-dark.png"
@@ -46,36 +46,34 @@ export default function Dock() {
           alt="Aceternity Logo"
         />
       ),
-      href: "#",
+      href: '#',
     },
     {
-      title: "Changelog",
+      title: 'Changelog',
       icon: (
         <IconExchange className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: '#',
     },
 
     {
-      title: "Twitter",
+      title: 'Twitter',
       icon: (
         <IconBrandX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: '#',
     },
     {
-      title: "GitHub",
+      title: 'GitHub',
       icon: (
         <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "#",
+      href: '#',
     },
-  ];
+  ]
   return (
     <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center w-auto">
-      <FloatingDock
-        items={links}
-      />
+      <FloatingDock items={links} />
     </div>
-  );
+  )
 }
