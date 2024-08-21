@@ -1,8 +1,7 @@
 import NavbarDemo from '../components/NavigationBar/navigationbar'
 import HoverCard from '../components/HoverCard/hovercard'
 import Footer from '../components/Footer/footer'
-import FloatingCard from '../components/FloatingCard/floating-card'
-import { ModeToggle } from '../components/DarkModeToggle/dark-mode-toggle'
+import TitleCard from '../components/TitleCard/title-card'
 
 export default function Home() {
   return (
@@ -10,7 +9,7 @@ export default function Home() {
       <div className="absolute pointer-events-none inset-0 flex dark:bg-neutral-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
       <NavbarDemo />
       <div className="flex flex-col justify-center items-center h-[75vh]">
-      <FloatingCard />
+      <TitleCard />
       </div>
       <HoverCard />
       <Footer />
