@@ -17,7 +17,7 @@ export default function Dock() {
     {
       title: 'Home',
       icon: (
-        <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconHome className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
       href: '#',
     },
@@ -25,14 +25,14 @@ export default function Dock() {
     {
       title: 'Products',
       icon: (
-        <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconTerminal2 className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
       href: '#',
     },
     {
       title: 'Components',
       icon: (
-        <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconNewSection className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
       href: '#',
     },
@@ -51,7 +51,7 @@ export default function Dock() {
     {
       title: 'Changelog',
       icon: (
-        <IconExchange className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconExchange className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
       href: '#',
     },
@@ -59,14 +59,14 @@ export default function Dock() {
     {
       title: 'Twitter',
       icon: (
-        <IconBrandX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconBrandX className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
       href: '#',
     },
     {
       title: 'GitHub',
       icon: (
-        <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconBrandGithub className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
       href: '#',
     },
