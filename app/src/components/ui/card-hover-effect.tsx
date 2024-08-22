@@ -60,9 +60,11 @@ export const HoverEffect = ({
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>
               </div>
-              <div className="absolute top-4 right-4">
-                {/* Play button here /> */}
-              </div>
+              {hoveredIndex === idx && (
+                <div className="transition-all duration-1000 absolute inset-0 flex items-center justify-center">
+                  <Play size={48} className="text-white fill-current" />
+                </div>
+              )}
             </div>
           </Card>
         </Link>
