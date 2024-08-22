@@ -35,9 +35,8 @@ export const HoverEffect = ({
       )}
     >
       {items.map((item, idx) => (
-        <Link
-          href={item?.link}
-          key={item?.link}
+        <div
+          key={item?.title}
           className="relative group block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
@@ -59,17 +58,17 @@ export const HoverEffect = ({
               />
             )}
           </AnimatePresence>
-          <Card hovered={hoveredIndex === idx} backgroundImage={item.src}>
+          <Card hovered={hoveredIndex === idx} backgroundImage={item.src} playing={playingIndex === idx}>
             <div>
               <div
                 style={{
-                  visibility: hoveredIndex === idx ? 'hidden' : 'visible',
+                  visibility: (hoveredIndex === idx || playingIndex === idx) ? 'hidden' : 'visible',
                 }}
               >
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>
               </div>
-              {hoveredIndex === idx && (
+              { (hoveredIndex === idx || playingIndex === idx) && (
                 <div
                   className="absolute inset-0 flex items-center justify-center"
                   onClick={() => handlePlayPauseClick(idx)}
@@ -83,7 +82,7 @@ export const HoverEffect = ({
               )}
             </div>
           </Card>
-        </Link>
+        </div>
       ))}
     </div>
   )
@@ -94,11 +93,13 @@ export const Card = ({
   children,
   hovered,
   backgroundImage,
+  playing,
 }: {
   className?: string
   children: React.ReactNode
   hovered?: boolean
   backgroundImage?: string
+  playing?: boolean
 }) => {
   return (
     <div
@@ -110,7 +111,7 @@ export const Card = ({
       <div
         className={cn(
           'absolute inset-0 transition-opacity duration-300 ease-in-out',
-          hovered ? 'opacity-100' : 'opacity-0'
+          (hovered || playing) ? 'opacity-100' : 'opacity-0'
         )}
         style={{
           backgroundImage: `url('${backgroundImage}')`,
