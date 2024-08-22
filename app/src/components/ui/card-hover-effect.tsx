@@ -17,15 +17,17 @@ export const HoverEffect = ({
   className?: string
 }) => {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  let [playingIndex, setPlayingIndex] = useState<number | null>(null)
+  let [playingIndices, setPlayingIndices] = useState<number[]>([]);
 
   const handlePlayPauseClick = (index: number) => {
-    if (playingIndex === index) {
-      setPlayingIndex(null) // Switch to pause
-    } else {
-      setPlayingIndex(index) // Switch to play
-    }
-  }
+    setPlayingIndices((prev) => {
+      if (playingIndices.includes(index)) {
+        return prev.filter((i) => i !== index); // Remove the index to pause
+      } else {
+        return [...prev, index]; // Add the index to play
+      }
+    });
+  };
 
   return (
     <div
@@ -58,22 +60,22 @@ export const HoverEffect = ({
               />
             )}
           </AnimatePresence>
-          <Card hovered={hoveredIndex === idx} backgroundImage={item.src} playing={playingIndex === idx}>
+          <Card hovered={hoveredIndex === idx} backgroundImage={item.src} playing={playingIndices.includes(idx)}>
             <div>
               <div
                 style={{
-                  visibility: (hoveredIndex === idx || playingIndex === idx) ? 'hidden' : 'visible',
+                  visibility: (hoveredIndex === idx || playingIndices.includes(idx)) ? 'hidden' : 'visible',
                 }}
               >
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>
               </div>
-              { (hoveredIndex === idx || playingIndex === idx) && (
+              { (hoveredIndex === idx || playingIndices.includes(idx)) && (
                 <div
                   className="absolute inset-0 flex items-center justify-center"
                   onClick={() => handlePlayPauseClick(idx)}
                 >
-                  {playingIndex === idx ? (
+                  {playingIndices.includes(idx) ? (
                     <Pause size={48} className="text-white fill-current" />
                   ) : (
                     <Play size={48} className="text-white fill-current" />
