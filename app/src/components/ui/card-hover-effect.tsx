@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
+import { Play, Pause } from 'lucide-react'
 
 export const HoverEffect = ({
   items,
@@ -16,6 +17,17 @@ export const HoverEffect = ({
   className?: string
 }) => {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  let [playingIndices, setPlayingIndices] = useState<number[]>([]);
+
+  const handlePlayPauseClick = (index: number) => {
+    setPlayingIndices((prev) => {
+      if (playingIndices.includes(index)) {
+        return prev.filter((i) => i !== index); // Remove the index to pause
+      } else {
+        return [...prev, index]; // Add the index to play
+      }
+    });
+  };
 
   return (
     <div
@@ -25,9 +37,8 @@ export const HoverEffect = ({
       )}
     >
       {items.map((item, idx) => (
-        <Link
-          href={item?.link}
-          key={item?.link}
+        <div
+          key={item?.title}
           className="relative group block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
@@ -49,11 +60,31 @@ export const HoverEffect = ({
               />
             )}
           </AnimatePresence>
-          <Card hovered={hoveredIndex === idx} backgroundImage={item.src}>
-            <CardTitle>{item.title}</CardTitle>
-            <CardDescription>{item.description}</CardDescription>
+          <Card hovered={hoveredIndex === idx} backgroundImage={item.src} playing={playingIndices.includes(idx)}>
+            <div>
+              <div
+                style={{
+                  visibility: (hoveredIndex === idx || playingIndices.includes(idx)) ? 'hidden' : 'visible',
+                }}
+              >
+                <CardTitle>{item.title}</CardTitle>
+                <CardDescription>{item.description}</CardDescription>
+              </div>
+              { (hoveredIndex === idx || playingIndices.includes(idx)) && (
+                <div
+                  className="absolute inset-0 flex items-center justify-center"
+                  onClick={() => handlePlayPauseClick(idx)}
+                >
+                  {playingIndices.includes(idx) ? (
+                    <Pause size={48} className="text-white fill-current" />
+                  ) : (
+                    <Play size={48} className="text-white fill-current" />
+                  )}
+                </div>
+              )}
+            </div>
           </Card>
-        </Link>
+        </div>
       ))}
     </div>
   )
@@ -64,11 +95,13 @@ export const Card = ({
   children,
   hovered,
   backgroundImage,
+  playing,
 }: {
   className?: string
   children: React.ReactNode
   hovered?: boolean
   backgroundImage?: string
+  playing?: boolean
 }) => {
   return (
     <div
@@ -80,7 +113,7 @@ export const Card = ({
       <div
         className={cn(
           'absolute inset-0 transition-opacity duration-300 ease-in-out',
-          hovered ? 'opacity-100' : 'opacity-0'
+          (hovered || playing) ? 'opacity-100' : 'opacity-0'
         )}
         style={{
           backgroundImage: `url('${backgroundImage}')`,
