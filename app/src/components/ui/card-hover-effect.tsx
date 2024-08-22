@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
-import { Play } from 'lucide-react'
+import { Play, Pause } from 'lucide-react'
 
 export const HoverEffect = ({
   items,
@@ -17,6 +17,15 @@ export const HoverEffect = ({
   className?: string
 }) => {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  let [playingIndex, setPlayingIndex] = useState<number | null>(null)
+
+  const handlePlayPauseClick = (index: number) => {
+    if (playingIndex === index) {
+      setPlayingIndex(null) // Switch to pause
+    } else {
+      setPlayingIndex(index) // Switch to play
+    }
+  }
 
   return (
     <div
@@ -61,8 +70,15 @@ export const HoverEffect = ({
                 <CardDescription>{item.description}</CardDescription>
               </div>
               {hoveredIndex === idx && (
-                <div className="transition-all duration-1000 absolute inset-0 flex items-center justify-center">
-                  <Play size={48} className="text-white fill-current" />
+                <div
+                  className="absolute inset-0 flex items-center justify-center"
+                  onClick={() => handlePlayPauseClick(idx)}
+                >
+                  {playingIndex === idx ? (
+                    <Pause size={48} className="text-white fill-current" />
+                  ) : (
+                    <Play size={48} className="text-white fill-current" />
+                  )}
                 </div>
               )}
             </div>
