@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
+import { Play } from 'lucide-react'
 
 export const HoverEffect = ({
   items,
@@ -50,8 +51,19 @@ export const HoverEffect = ({
             )}
           </AnimatePresence>
           <Card hovered={hoveredIndex === idx} backgroundImage={item.src}>
-            <CardTitle>{item.title}</CardTitle>
-            <CardDescription>{item.description}</CardDescription>
+            <div>
+              <div
+                style={{
+                  visibility: hoveredIndex === idx ? 'hidden' : 'visible',
+                }}
+              >
+                <CardTitle>{item.title}</CardTitle>
+                <CardDescription>{item.description}</CardDescription>
+              </div>
+              <div className="absolute top-4 right-4">
+                {/* Play button here /> */}
+              </div>
+            </div>
           </Card>
         </Link>
       ))}
