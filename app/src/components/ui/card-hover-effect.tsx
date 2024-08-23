@@ -1,7 +1,6 @@
 import { cn } from '@/lib/utils'
 import { AnimatePresence, motion } from 'framer-motion'
-import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Play, Pause } from 'lucide-react'
 
 export const HoverEffect = ({
@@ -11,23 +10,41 @@ export const HoverEffect = ({
   items: {
     title: string
     description: string
-    link: string
+    link: string // URL to the .wav file
     src?: string
   }[]
   className?: string
 }) => {
-  let [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  let [playingIndices, setPlayingIndices] = useState<number[]>([]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [playingIndices, setPlayingIndices] = useState<number[]>([])
+
+  // Refs for each audio element
+  const audioRefs = useRef<HTMLAudioElement[]>([])
 
   const handlePlayPauseClick = (index: number) => {
-    setPlayingIndices((prev) => {
-      if (playingIndices.includes(index)) {
-        return prev.filter((i) => i !== index); // Remove the index to pause
-      } else {
-        return [...prev, index]; // Add the index to play
-      }
-    });
-  };
+    const currentAudio = audioRefs.current[index]
+
+    if (!currentAudio) return
+
+    if (playingIndices.includes(index)) {
+      // If this audio is already playing, pause it
+      currentAudio.pause()
+      setPlayingIndices((prev) => prev.filter((i) => i !== index))
+    } else {
+      // Play the selected audio
+      currentAudio.play()
+      setPlayingIndices((prev) => [...prev, index])
+    }
+  }
+
+  // Ensure all audios are stopped when the component unmounts
+  useEffect(() => {
+    return () => {
+      audioRefs.current.forEach((audio) => {
+        audio?.pause()
+      })
+    }
+  }, [])
 
   return (
     <div
@@ -60,17 +77,24 @@ export const HoverEffect = ({
               />
             )}
           </AnimatePresence>
-          <Card hovered={hoveredIndex === idx} backgroundImage={item.src} playing={playingIndices.includes(idx)}>
+          <Card
+            hovered={hoveredIndex === idx}
+            backgroundImage={item.src}
+            playing={playingIndices.includes(idx)}
+          >
             <div>
               <div
                 style={{
-                  visibility: (hoveredIndex === idx || playingIndices.includes(idx)) ? 'hidden' : 'visible',
+                  visibility:
+                    hoveredIndex === idx || playingIndices.includes(idx)
+                      ? 'hidden'
+                      : 'visible',
                 }}
               >
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>
               </div>
-              { (hoveredIndex === idx || playingIndices.includes(idx)) && (
+              {(hoveredIndex === idx || playingIndices.includes(idx)) && (
                 <div
                   className="absolute inset-0 flex items-center justify-center"
                   onClick={() => handlePlayPauseClick(idx)}
@@ -83,6 +107,14 @@ export const HoverEffect = ({
                 </div>
               )}
             </div>
+            {/* Hidden audio element */}
+            <audio
+              ref={(el) => {
+                if (el) audioRefs.current[idx] = el
+              }}
+              src={item.link}
+              preload="auto"
+            />
           </Card>
         </div>
       ))}
@@ -113,7 +145,7 @@ export const Card = ({
       <div
         className={cn(
           'absolute inset-0 transition-opacity duration-300 ease-in-out',
-          (hovered || playing) ? 'opacity-100' : 'opacity-0'
+          hovered || playing ? 'opacity-100' : 'opacity-0'
         )}
         style={{
           backgroundImage: `url('${backgroundImage}')`,
@@ -146,6 +178,7 @@ export const CardTitle = ({
     </h4>
   )
 }
+
 export const CardDescription = ({
   className,
   children,
