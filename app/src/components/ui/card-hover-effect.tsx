@@ -85,10 +85,18 @@ export const HoverEffect = ({
             <div>
               <div
                 style={{
+                  opacity:
+                    hoveredIndex === idx || playingIndices.includes(idx)
+                      ? 0
+                      : 1,
                   visibility:
                     hoveredIndex === idx || playingIndices.includes(idx)
                       ? 'hidden'
                       : 'visible',
+                  transition:
+                    hoveredIndex === idx || playingIndices.includes(idx)
+                      ? 'none'
+                      : 'opacity 0.2s ease-in-out',
                 }}
               >
                 <CardTitle>{item.title}</CardTitle>
