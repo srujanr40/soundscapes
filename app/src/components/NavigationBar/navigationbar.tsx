@@ -42,13 +42,13 @@ function Navbar({ className }: { className?: string }) {
         </MenuItem>
         <MenuItem setActive={setActive} active={active} item="Theme">
           <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="" onClick={() => setTheme('light')}>
+            <HoveredLink href="#" onClick={() => setTheme('light')}>
               Light
             </HoveredLink>
-            <HoveredLink href="" onClick={() => setTheme('dark')}>
+            <HoveredLink href="#" onClick={() => setTheme('dark')}>
               Dark
             </HoveredLink>
-            <HoveredLink href="" onClick={() => setTheme('system')}>
+            <HoveredLink href="#" onClick={() => setTheme('system')}>
               System
             </HoveredLink>
           </div>

@@ -2,37 +2,39 @@
 
 import React from 'react'
 import { FloatingDock } from '@/components/ui/floating-dock'
+import AudioDrawer from '@/components/AudioDrawer/audio-drawer'
 import {
-  IconBrandGithub,
-  IconBrandX,
-  IconExchange,
-  IconHome,
-  IconNewSection,
-  IconTerminal2,
+  IconChartCandle,
+  IconPlayerPause,
+  IconPlayerPlay,
+  IconVolume,
 } from '@tabler/icons-react'
 import Image from 'next/image'
+import { on } from 'events'
 
 export default function Dock() {
+  const [toggleMixer, setToggleMixer] = React.useState(false)
+
   const links = [
     {
-      title: 'Home',
+      title: 'Play',
       icon: (
-        <IconHome className="h-full w-full text-zinc-50 dark:text-neutral-300" />
+        <IconPlayerPlay className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
       href: '#',
     },
 
     {
-      title: 'Products',
+      title: 'Pause',
       icon: (
-        <IconTerminal2 className="h-full w-full text-zinc-50 dark:text-neutral-300" />
+        <IconPlayerPause className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
       href: '#',
     },
     {
-      title: 'Components',
+      title: 'Master Volume',
       icon: (
-        <IconNewSection className="h-full w-full text-zinc-50 dark:text-neutral-300" />
+        <IconVolume className="h-full w-full text-zinc-50 dark:text-neutral-300"/>
       ),
       href: '#',
     },
@@ -49,26 +51,15 @@ export default function Dock() {
       href: '#',
     },
     {
-      title: 'Changelog',
+      title: 'Volume Mixer',
       icon: (
-        <IconExchange className="h-full w-full text-zinc-50 dark:text-neutral-300" />
+        <IconChartCandle className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
       href: '#',
-    },
-
-    {
-      title: 'Twitter',
-      icon: (
-        <IconBrandX className="h-full w-full text-zinc-50 dark:text-neutral-300" />
-      ),
-      href: '#',
-    },
-    {
-      title: 'GitHub',
-      icon: (
-        <IconBrandGithub className="h-full w-full text-zinc-50 dark:text-neutral-300" />
-      ),
-      href: '#',
+      onClick: () => {
+        setToggleMixer(!toggleMixer)
+        console.log(toggleMixer)
+      },
     },
   ]
   return (
