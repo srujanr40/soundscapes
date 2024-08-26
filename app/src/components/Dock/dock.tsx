@@ -38,18 +38,6 @@ export default function Dock() {
       onClick: () => null,
     },
     {
-      title: 'Aceternity UI',
-      icon: (
-        <Image
-          src="https://assets.aceternity.com/logo-dark.png"
-          width={20}
-          height={20}
-          alt="Aceternity Logo"
-        />
-      ),
-      onClick: () => null,
-    },
-    {
       title: 'Volume Mixer',
       icon: (
         <IconChartCandle className="h-full w-full text-zinc-50 dark:text-neutral-300" />
@@ -60,7 +48,7 @@ export default function Dock() {
       },
     },
   ]
-  
+
   return (
     <div>
       {toggleMixer && <AudioDrawer />}

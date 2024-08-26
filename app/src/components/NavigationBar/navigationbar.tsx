@@ -18,7 +18,7 @@ function Navbar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'fixed top-10 inset-x-0 max-w-lg mx-auto z-50 border border-gray-100 dark:border-slate-900 shadow-lg shadow-slate-200 dark:shadow-gray-950 rounded-full', // Added border and shadow classes
+        'fixed top-10 inset-x-0 max-w-sm mx-auto z-50 border border-gray-100 dark:border-slate-900 shadow-lg shadow-slate-200 dark:shadow-gray-950 rounded-full', // Added border and shadow classes
         className
       )}
     >
