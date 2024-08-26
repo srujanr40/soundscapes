@@ -10,7 +10,6 @@ import {
   IconVolume,
 } from '@tabler/icons-react'
 import Image from 'next/image'
-import { on } from 'events'
 
 export default function Dock() {
   const [toggleMixer, setToggleMixer] = React.useState(false)
@@ -21,7 +20,7 @@ export default function Dock() {
       icon: (
         <IconPlayerPlay className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
-      href: '#',
+      onClick: () => null,
     },
 
     {
@@ -29,14 +28,14 @@ export default function Dock() {
       icon: (
         <IconPlayerPause className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
-      href: '#',
+      onClick: () => null,
     },
     {
       title: 'Master Volume',
       icon: (
-        <IconVolume className="h-full w-full text-zinc-50 dark:text-neutral-300"/>
+        <IconVolume className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
-      href: '#',
+      onClick: () => null,
     },
     {
       title: 'Aceternity UI',
@@ -48,23 +47,26 @@ export default function Dock() {
           alt="Aceternity Logo"
         />
       ),
-      href: '#',
+      onClick: () => null,
     },
     {
       title: 'Volume Mixer',
       icon: (
         <IconChartCandle className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
-      href: '#',
       onClick: () => {
         setToggleMixer(!toggleMixer)
         console.log(toggleMixer)
       },
     },
   ]
+  
   return (
-    <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center w-auto">
-      <FloatingDock items={links} />
+    <div>
+      {toggleMixer && <AudioDrawer />}
+      <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center w-auto">
+        <FloatingDock items={links} />
+      </div>
     </div>
   )
 }
