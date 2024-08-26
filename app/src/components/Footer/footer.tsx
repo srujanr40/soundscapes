@@ -13,7 +13,7 @@ export default function Footer() {
         </p>
       </div>
       <p className="justify-self-end text-sm text-muted-foreground z-30">
-        Powered by Next.js, TailwindCSS, and Aceternity
+        Powered by Next.js, TailwindCSS, Aceternity, and shadcn/ui
       </p>
     </div>
   )
