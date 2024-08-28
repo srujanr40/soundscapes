@@ -1,11 +1,14 @@
 "use client"
+import { useAudio } from "../AudioContext";
 import { HoverEffect } from "../ui/card-hover-effect";
 
 
 export default function HoverCard() {
+  const { playingIndices, handlePlayPauseClick } = useAudio();
+
   return (
     <div className="max-w-5xl mx-auto px-8">
-      <HoverEffect items={projects} />
+      <HoverEffect items={projects} playingIndices={playingIndices} handlePlayPauseClick={handlePlayPauseClick}  />
     </div>
   );
 }

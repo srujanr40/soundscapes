@@ -9,10 +9,11 @@ import {
   IconPlayerPlay,
   IconVolume,
 } from '@tabler/icons-react'
-import Image from 'next/image'
+import { useAudio } from '@/components/AudioContext'
 
 export default function Dock() {
   const [toggleMixer, setToggleMixer] = React.useState(false)
+  const { playingIndices, handlePlayPauseClick } = useAudio()
 
   const links = [
     {
@@ -28,7 +29,11 @@ export default function Dock() {
       icon: (
         <IconPlayerPause className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
-      onClick: () => null,
+      onClick: () => {
+        for (let i = 0; i < playingIndices.length; i++) {
+          handlePlayPauseClick(playingIndices[i])
+        }
+      },
     },
     {
       title: 'Master Volume',

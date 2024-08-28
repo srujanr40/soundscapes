@@ -6,6 +6,8 @@ import { Play, Pause } from 'lucide-react'
 export const HoverEffect = ({
   items,
   className,
+  playingIndices,          // Receive playingIndices from props
+  handlePlayPauseClick,    // Receive handlePlayPauseClick from props
 }: {
   items: {
     title: string
@@ -14,30 +16,14 @@ export const HoverEffect = ({
     src?: string
   }[]
   className?: string
+  playingIndices: number[]               // Add prop type for playingIndices
+  handlePlayPauseClick: (index: number) => void  // Add prop type for the handler
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [playingIndices, setPlayingIndices] = useState<number[]>([])
 
   // Refs for each audio element
   const audioRefs = useRef<HTMLAudioElement[]>([])
 
-  const handlePlayPauseClick = (index: number) => {
-    const currentAudio = audioRefs.current[index]
-
-    if (!currentAudio) return
-
-    if (playingIndices.includes(index)) {
-      // If this audio is already playing, pause it
-      currentAudio.pause()
-      setPlayingIndices((prev) => prev.filter((i) => i !== index))
-    } else {
-      // Play the selected audio
-      currentAudio.play()
-      setPlayingIndices((prev) => [...prev, index])
-    }
-  }
-
-  // Ensure all audios are stopped when the component unmounts
   useEffect(() => {
     return () => {
       audioRefs.current.forEach((audio) => {
@@ -45,6 +31,20 @@ export const HoverEffect = ({
       })
     }
   }, [])
+
+  useEffect(() => {
+    // Play or pause the respective audio element based on playingIndices state
+    items.forEach((_, index) => {
+      const audioElement = audioRefs.current[index]
+      if (audioElement) {
+        if (playingIndices.includes(index)) {
+          audioElement.play()
+        } else {
+          audioElement.pause()
+        }
+      }
+    })
+  }, [playingIndices])
 
   return (
     <div
@@ -105,7 +105,7 @@ export const HoverEffect = ({
               {(hoveredIndex === idx || playingIndices.includes(idx)) && (
                 <div
                   className="absolute inset-0 flex items-center justify-center"
-                  onClick={() => handlePlayPauseClick(idx)}
+                  onClick={() => handlePlayPauseClick(idx)}  // Call the handler from props
                 >
                   {playingIndices.includes(idx) ? (
                     <Pause size={48} className="text-white fill-current" />
