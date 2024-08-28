@@ -2,78 +2,64 @@
 
 import React from 'react'
 import { FloatingDock } from '@/components/ui/floating-dock'
+import AudioDrawer from '@/components/AudioDrawer/audio-drawer'
 import {
-  IconBrandGithub,
-  IconBrandX,
-  IconExchange,
-  IconHome,
-  IconNewSection,
-  IconTerminal2,
+  IconChartCandle,
+  IconPlayerPause,
+  IconPlayerPlay,
+  IconVolume,
 } from '@tabler/icons-react'
-import Image from 'next/image'
+import { useAudio } from '@/components/AudioContext'
 
 export default function Dock() {
+  const [toggleMixer, setToggleMixer] = React.useState(false)
+  const { playingIndices, handlePlayPauseClick } = useAudio()
+
   const links = [
     {
-      title: 'Home',
+      title: 'Play',
       icon: (
-        <IconHome className="h-full w-full text-zinc-50 dark:text-neutral-300" />
+        <IconPlayerPlay className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
-      href: '#',
+      onClick: () => null,
     },
 
     {
-      title: 'Products',
+      title: 'Pause',
       icon: (
-        <IconTerminal2 className="h-full w-full text-zinc-50 dark:text-neutral-300" />
+        <IconPlayerPause className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
-      href: '#',
+      onClick: () => {
+        for (let i = 0; i < playingIndices.length; i++) {
+          handlePlayPauseClick(playingIndices[i])
+        }
+      },
     },
     {
-      title: 'Components',
+      title: 'Master Volume',
       icon: (
-        <IconNewSection className="h-full w-full text-zinc-50 dark:text-neutral-300" />
+        <IconVolume className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
-      href: '#',
+      onClick: () => null,
     },
     {
-      title: 'Aceternity UI',
+      title: 'Volume Mixer',
       icon: (
-        <Image
-          src="https://assets.aceternity.com/logo-dark.png"
-          width={20}
-          height={20}
-          alt="Aceternity Logo"
-        />
+        <IconChartCandle className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
-      href: '#',
-    },
-    {
-      title: 'Changelog',
-      icon: (
-        <IconExchange className="h-full w-full text-zinc-50 dark:text-neutral-300" />
-      ),
-      href: '#',
-    },
-
-    {
-      title: 'Twitter',
-      icon: (
-        <IconBrandX className="h-full w-full text-zinc-50 dark:text-neutral-300" />
-      ),
-      href: '#',
-    },
-    {
-      title: 'GitHub',
-      icon: (
-        <IconBrandGithub className="h-full w-full text-zinc-50 dark:text-neutral-300" />
-      ),
-      href: '#',
+      onClick: () => {
+        setToggleMixer(!toggleMixer)
+        console.log(toggleMixer)
+      },
     },
   ]
+
   return (
-    <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center w-auto">
-      <FloatingDock items={links} />
+    <div>
+      {toggleMixer && <AudioDrawer />}
+      <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center w-auto">
+        <FloatingDock items={links} />
+      </div>
     </div>
   )
 }

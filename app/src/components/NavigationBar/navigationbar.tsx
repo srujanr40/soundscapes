@@ -18,7 +18,7 @@ function Navbar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'fixed top-10 inset-x-0 max-w-lg mx-auto z-50 border border-gray-100 dark:border-slate-900 shadow-lg shadow-slate-200 dark:shadow-gray-950 rounded-full', // Added border and shadow classes
+        'fixed top-10 inset-x-0 max-w-sm mx-auto z-50 border border-gray-100 dark:border-slate-900 shadow-lg shadow-slate-200 dark:shadow-gray-950 rounded-full', // Added border and shadow classes
         className
       )}
     >
@@ -42,15 +42,15 @@ function Navbar({ className }: { className?: string }) {
         </MenuItem>
         <MenuItem setActive={setActive} active={active} item="Theme">
           <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="" onClick={() => setTheme('light')}>
+            <div className='cursor-pointer' onClick={() => setTheme('light')}>
               Light
-            </HoveredLink>
-            <HoveredLink href="" onClick={() => setTheme('dark')}>
+            </div>
+            <div className='cursor-pointer' onClick={() => setTheme('dark')}>
               Dark
-            </HoveredLink>
-            <HoveredLink href="" onClick={() => setTheme('system')}>
+            </div>
+            <div className='cursor-pointer' onClick={() => setTheme('system')}>
               System
-            </HoveredLink>
+            </div>
           </div>
         </MenuItem>
       </Menu>

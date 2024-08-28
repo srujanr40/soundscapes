@@ -3,6 +3,7 @@ import HoverCard from '../components/HoverCard/hovercard'
 import Footer from '../components/Footer/footer'
 import TitleCard from '../components/TitleCard/title-card'
 import Dock from '../components/Dock/dock'
+import { AudioProvider } from '../components/AudioContext';
 
 export default function Home() {
   return (
@@ -12,8 +13,10 @@ export default function Home() {
       <div className="flex flex-col justify-center items-center h-[75vh]">
         <TitleCard />
       </div>
-      <HoverCard />
-      <Dock />
+      <AudioProvider>
+        <HoverCard />
+        <Dock />
+      </AudioProvider>
       <Footer />
     </div>
   )
