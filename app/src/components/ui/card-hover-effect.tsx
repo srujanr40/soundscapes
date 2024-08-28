@@ -6,8 +6,8 @@ import { Play, Pause } from 'lucide-react'
 export const HoverEffect = ({
   items,
   className,
-  playingIndices,          // Receive playingIndices from props
-  handlePlayPauseClick,    // Receive handlePlayPauseClick from props
+  playingIndices,          
+  handlePlayPauseClick,    
 }: {
   items: {
     title: string
@@ -16,8 +16,8 @@ export const HoverEffect = ({
     src?: string
   }[]
   className?: string
-  playingIndices: number[]               // Add prop type for playingIndices
-  handlePlayPauseClick: (index: number) => void  // Add prop type for the handler
+  playingIndices: number[]               
+  handlePlayPauseClick: (index: number) => void  
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
@@ -105,7 +105,7 @@ export const HoverEffect = ({
               {(hoveredIndex === idx || playingIndices.includes(idx)) && (
                 <div
                   className="absolute inset-0 flex items-center justify-center"
-                  onClick={() => handlePlayPauseClick(idx)}  // Call the handler from props
+                  onClick={() => handlePlayPauseClick(idx)}  
                 >
                   {playingIndices.includes(idx) ? (
                     <Pause size={48} className="text-white fill-current" />
