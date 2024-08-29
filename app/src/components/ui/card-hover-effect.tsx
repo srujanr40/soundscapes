@@ -6,8 +6,9 @@ import { Play, Pause } from 'lucide-react'
 export const HoverEffect = ({
   items,
   className,
-  playingIndices,          
-  handlePlayPauseClick,    
+  playingIndices,
+  handlePlayPauseClick,
+  masterVolume,
 }: {
   items: {
     title: string
@@ -17,7 +18,8 @@ export const HoverEffect = ({
   }[]
   className?: string
   playingIndices: { [key: number]: number } // 0 = default, 1 = playing, 2 = paused
-  handlePlayPauseClick: (index: number) => void  
+  handlePlayPauseClick: (index: number) => void
+  masterVolume: number
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
@@ -43,8 +45,9 @@ export const HoverEffect = ({
           audioElement.pause()
         }
       }
+      audioElement.volume = masterVolume
     })
-  }, [playingIndices])
+  }, [playingIndices, masterVolume])
 
   return (
     <div
@@ -86,15 +89,21 @@ export const HoverEffect = ({
               <div
                 style={{
                   opacity:
-                    hoveredIndex === idx || playingIndices[idx] === 1 || playingIndices[idx] === 2
+                    hoveredIndex === idx ||
+                    playingIndices[idx] === 1 ||
+                    playingIndices[idx] === 2
                       ? 0
                       : 1,
                   visibility:
-                    hoveredIndex === idx || playingIndices[idx] === 1 || playingIndices[idx] === 2
+                    hoveredIndex === idx ||
+                    playingIndices[idx] === 1 ||
+                    playingIndices[idx] === 2
                       ? 'hidden'
                       : 'visible',
                   transition:
-                    hoveredIndex === idx || playingIndices[idx] === 1 || playingIndices[idx] === 2
+                    hoveredIndex === idx ||
+                    playingIndices[idx] === 1 ||
+                    playingIndices[idx] === 2
                       ? 'none'
                       : 'opacity 0.2s ease-in-out',
                 }}
@@ -102,10 +111,12 @@ export const HoverEffect = ({
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>
               </div>
-              {(hoveredIndex === idx || playingIndices[idx] === 1 || playingIndices[idx] === 2) && (
+              {(hoveredIndex === idx ||
+                playingIndices[idx] === 1 ||
+                playingIndices[idx] === 2) && (
                 <div
                   className="absolute inset-0 flex items-center justify-center"
-                  onClick={() => handlePlayPauseClick(idx)}  
+                  onClick={() => handlePlayPauseClick(idx)}
                 >
                   {playingIndices[idx] === 1 ? (
                     <Pause size={48} className="text-white fill-current" />

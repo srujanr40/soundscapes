@@ -4,11 +4,11 @@ import { HoverEffect } from "../ui/card-hover-effect";
 
 
 export default function HoverCard() {
-  const { playingIndices, handlePlayPauseClick } = useAudio();
+  const { playingIndices, handlePlayPauseClick, setPlayingIndices, masterVolume, setMasterVolume } = useAudio()
 
   return (
     <div className="max-w-5xl mx-auto px-8">
-      <HoverEffect items={projects} playingIndices={playingIndices} handlePlayPauseClick={handlePlayPauseClick}  />
+      <HoverEffect items={projects} playingIndices={playingIndices} handlePlayPauseClick={handlePlayPauseClick} masterVolume={masterVolume}  />
     </div>
   );
 }

@@ -6,6 +6,8 @@ interface AudioContextType {
   playingIndices: { [key: number]: number } // 0 = default, 1 = playing, 2 = paused
   handlePlayPauseClick: (index: number, pause?: boolean) => void
   setPlayingIndices: React.Dispatch<React.SetStateAction<{ [key: number]: number }>>
+  masterVolume: number
+  setMasterVolume: React.Dispatch<React.SetStateAction<number>>
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined)
@@ -20,6 +22,7 @@ export function useAudio() {
 
 export function AudioProvider({ children }: { children: ReactNode }) {
   const [playingIndices, setPlayingIndices] = useState<{ [key: number]: number }>({})
+  const [masterVolume, setMasterVolume] = useState<number>(1)
 
   const handlePlayPauseClick = (index: number) => {
     setPlayingIndices((prev) => {
@@ -39,7 +42,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AudioContext.Provider value={{ playingIndices, handlePlayPauseClick, setPlayingIndices }}>
+    <AudioContext.Provider value={{ playingIndices, handlePlayPauseClick, setPlayingIndices, masterVolume, setMasterVolume }}>
       {children}
     </AudioContext.Provider>
   )

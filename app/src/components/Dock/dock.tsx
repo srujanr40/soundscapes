@@ -14,7 +14,7 @@ import { useAudio } from '@/components/AudioContext'
 
 export default function Dock() {
   const [toggleMixer, setToggleMixer] = React.useState(false)
-  const { playingIndices, handlePlayPauseClick, setPlayingIndices } = useAudio()
+  const { playingIndices, handlePlayPauseClick, setPlayingIndices, masterVolume, setMasterVolume } = useAudio()
 
   const links = [
     {
@@ -91,11 +91,28 @@ export default function Dock() {
     },
   ]
 
+  const handleVolumeChange = (event: any) => {
+    const newVolume = parseFloat(event.target.value);
+    setMasterVolume(newVolume);
+  }
+
   return (
     <div>
       {toggleMixer && <AudioDrawer />}
       <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center w-auto">
         <FloatingDock items={links} />
+      </div>
+      {/* Master Volume Slider */}
+      <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center w-auto">
+        <input 
+          type="range" 
+          min="0" 
+          max="1" 
+          step="0.01" 
+          value={masterVolume} 
+          onChange={handleVolumeChange} 
+          className="w-full" 
+        />
       </div>
     </div>
   )
