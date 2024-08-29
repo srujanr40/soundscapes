@@ -91,7 +91,7 @@ export default function Dock() {
     },
   ]
 
-  const handleVolumeChange = (event: any) => {
+  const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseFloat(event.target.value);
     setMasterVolume(newVolume);
   }
