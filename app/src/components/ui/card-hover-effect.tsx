@@ -6,8 +6,9 @@ import { Play, Pause } from 'lucide-react'
 export const HoverEffect = ({
   items,
   className,
-  playingIndices,          // Receive playingIndices from props
-  handlePlayPauseClick,    // Receive handlePlayPauseClick from props
+  playingIndices,
+  handlePlayPauseClick,
+  masterVolume,
 }: {
   items: {
     title: string
@@ -16,8 +17,9 @@ export const HoverEffect = ({
     src?: string
   }[]
   className?: string
-  playingIndices: number[]               // Add prop type for playingIndices
-  handlePlayPauseClick: (index: number) => void  // Add prop type for the handler
+  playingIndices: { [key: number]: number } // 0 = default, 1 = playing, 2 = paused
+  handlePlayPauseClick: (index: number) => void
+  masterVolume: number
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
@@ -37,14 +39,15 @@ export const HoverEffect = ({
     items.forEach((_, index) => {
       const audioElement = audioRefs.current[index]
       if (audioElement) {
-        if (playingIndices.includes(index)) {
+        if (playingIndices[index] === 1) {
           audioElement.play()
         } else {
           audioElement.pause()
         }
       }
+      audioElement.volume = masterVolume
     })
-  }, [playingIndices])
+  }, [playingIndices, masterVolume])
 
   return (
     <div
@@ -80,21 +83,27 @@ export const HoverEffect = ({
           <Card
             hovered={hoveredIndex === idx}
             backgroundImage={item.src}
-            playing={playingIndices.includes(idx)}
+            playing={playingIndices[idx] === 1 || playingIndices[idx] === 2}
           >
             <div>
               <div
                 style={{
                   opacity:
-                    hoveredIndex === idx || playingIndices.includes(idx)
+                    hoveredIndex === idx ||
+                    playingIndices[idx] === 1 ||
+                    playingIndices[idx] === 2
                       ? 0
                       : 1,
                   visibility:
-                    hoveredIndex === idx || playingIndices.includes(idx)
+                    hoveredIndex === idx ||
+                    playingIndices[idx] === 1 ||
+                    playingIndices[idx] === 2
                       ? 'hidden'
                       : 'visible',
                   transition:
-                    hoveredIndex === idx || playingIndices.includes(idx)
+                    hoveredIndex === idx ||
+                    playingIndices[idx] === 1 ||
+                    playingIndices[idx] === 2
                       ? 'none'
                       : 'opacity 0.2s ease-in-out',
                 }}
@@ -102,12 +111,14 @@ export const HoverEffect = ({
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>
               </div>
-              {(hoveredIndex === idx || playingIndices.includes(idx)) && (
+              {(hoveredIndex === idx ||
+                playingIndices[idx] === 1 ||
+                playingIndices[idx] === 2) && (
                 <div
                   className="absolute inset-0 flex items-center justify-center"
-                  onClick={() => handlePlayPauseClick(idx)}  // Call the handler from props
+                  onClick={() => handlePlayPauseClick(idx)}
                 >
-                  {playingIndices.includes(idx) ? (
+                  {playingIndices[idx] === 1 ? (
                     <Pause size={48} className="text-white fill-current" />
                   ) : (
                     <Play size={48} className="text-white fill-current" />

@@ -8,12 +8,13 @@ import {
   IconPlayerPause,
   IconPlayerPlay,
   IconVolume,
+  IconWiper,
 } from '@tabler/icons-react'
 import { useAudio } from '@/components/AudioContext'
 
 export default function Dock() {
   const [toggleMixer, setToggleMixer] = React.useState(false)
-  const { playingIndices, handlePlayPauseClick } = useAudio()
+  const { playingIndices, handlePlayPauseClick, setPlayingIndices, masterVolume, setMasterVolume } = useAudio()
 
   const links = [
     {
@@ -21,18 +22,54 @@ export default function Dock() {
       icon: (
         <IconPlayerPlay className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
-      onClick: () => null,
+      onClick: () => {
+        setPlayingIndices((prevIndices: { [key: number]: number }) => {
+          const updatedIndices: { [key: number]: number } = {}; // Create a new object to avoid direct mutation
+        
+          Object.keys(prevIndices).forEach((key) => {
+            if (prevIndices[Number(key)] === 2) {
+              updatedIndices[Number(key)] = 1; // Convert key to number and set value to 1 (playing)
+            } 
+          });
+        
+          return updatedIndices; 
+        });
+      }
     },
-
     {
       title: 'Pause',
       icon: (
         <IconPlayerPause className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
       onClick: () => {
-        for (let i = 0; i < playingIndices.length; i++) {
-          handlePlayPauseClick(playingIndices[i])
-        }
+        setPlayingIndices((prevIndices: { [key: number]: number }) => {
+          const updatedIndices: { [key: number]: number } = {}; 
+        
+          Object.keys(prevIndices).forEach((key) => {
+            if (prevIndices[Number(key)] === 1 || prevIndices[Number(key)] === 2) {
+              updatedIndices[Number(key)] = 2; // Convert key to number and set value to 2 (paused state)
+            }
+          });
+        
+          return updatedIndices; 
+        });
+      },
+    },
+    {
+      title: 'Clear',
+      icon: (
+        <IconWiper className="h-full w-full text-zinc-50 dark:text-neutral-300" />
+      ),
+      onClick: () => {
+        setPlayingIndices((prevIndices: { [key: number]: number }) => {
+          const updatedIndices: { [key: number]: number } = {}; 
+        
+          Object.keys(prevIndices).forEach((key) => {
+            updatedIndices[Number(key)] = 0; // Convert key to number and set value to 0 (default state)
+          });
+        
+          return updatedIndices; 
+        });
       },
     },
     {
@@ -54,11 +91,28 @@ export default function Dock() {
     },
   ]
 
+  const handleVolumeChange = (event: any) => {
+    const newVolume = parseFloat(event.target.value);
+    setMasterVolume(newVolume);
+  }
+
   return (
     <div>
       {toggleMixer && <AudioDrawer />}
       <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center w-auto">
         <FloatingDock items={links} />
+      </div>
+      {/* Master Volume Slider */}
+      <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center w-auto">
+        <input 
+          type="range" 
+          min="0" 
+          max="1" 
+          step="0.01" 
+          value={masterVolume} 
+          onChange={handleVolumeChange} 
+          className="w-full" 
+        />
       </div>
     </div>
   )
