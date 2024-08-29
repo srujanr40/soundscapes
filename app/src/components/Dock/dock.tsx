@@ -1,10 +1,8 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { FloatingDock } from '@/components/ui/floating-dock'
-import AudioDrawer from '@/components/AudioDrawer/audio-drawer'
 import {
-  IconChartCandle,
   IconPlayerPause,
   IconPlayerPlay,
   IconVolume,
@@ -12,9 +10,12 @@ import {
 } from '@tabler/icons-react'
 import { useAudio } from '@/components/AudioContext'
 
+// import './sliderStyles.css'; 
+
 export default function Dock() {
-  const [toggleMixer, setToggleMixer] = React.useState(false)
   const { playingIndices, handlePlayPauseClick, setPlayingIndices, masterVolume, setMasterVolume } = useAudio()
+
+  const [isVolumePopupVisible, setVolumePopupVisible] = useState(false);
 
   const links = [
     {
@@ -27,7 +28,7 @@ export default function Dock() {
           const updatedIndices: { [key: number]: number } = {}; // Create a new object to avoid direct mutation
         
           Object.keys(prevIndices).forEach((key) => {
-            if (prevIndices[Number(key)] === 2) {
+            if (prevIndices[Number(key)] === 2 || prevIndices[Number(key)] === 1) {
               updatedIndices[Number(key)] = 1; // Convert key to number and set value to 1 (playing)
             } 
           });
@@ -77,17 +78,7 @@ export default function Dock() {
       icon: (
         <IconVolume className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
-      onClick: () => null,
-    },
-    {
-      title: 'Volume Mixer',
-      icon: (
-        <IconChartCandle className="h-full w-full text-zinc-50 dark:text-neutral-300" />
-      ),
-      onClick: () => {
-        setToggleMixer(!toggleMixer)
-        console.log(toggleMixer)
-      },
+      onClick: () => setVolumePopupVisible((prev) => !prev),
     },
   ]
 
@@ -96,24 +87,25 @@ export default function Dock() {
     setMasterVolume(newVolume);
   }
 
+
   return (
     <div>
-      {toggleMixer && <AudioDrawer />}
       <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center w-auto">
         <FloatingDock items={links} />
       </div>
-      {/* Master Volume Slider */}
-      <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center w-auto">
-        <input 
-          type="range" 
-          min="0" 
-          max="1" 
-          step="0.01" 
-          value={masterVolume} 
-          onChange={handleVolumeChange} 
-          className="w-full" 
-        />
-      </div>
+      {isVolumePopupVisible && (
+        <div className="fixed bottom-28 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center w-60 bg-gradient-to-br from-purple-500 via-pink-400 to-orange-200 p-2 rounded-xl shadow-md">
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={masterVolume}
+            onChange={handleVolumeChange}
+            className="w-full"
+          />
+        </div>
+      )}
     </div>
   )
 }
