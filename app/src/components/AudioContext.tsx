@@ -28,7 +28,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
 
       if (currentState === 1) {
         newState[index] = 0 // Toggle to default if currently playing
-      } else if (currentState === 0) {
+      } else if (currentState === 0 || currentState === 2) {
         newState[index] = 1 // Toggle to playing if currently default
       } else {
         newState[index] = 0

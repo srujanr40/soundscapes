@@ -80,21 +80,21 @@ export const HoverEffect = ({
           <Card
             hovered={hoveredIndex === idx}
             backgroundImage={item.src}
-            playing={playingIndices[idx] === 1}
+            playing={playingIndices[idx] === 1 || playingIndices[idx] === 2}
           >
             <div>
               <div
                 style={{
                   opacity:
-                    hoveredIndex === idx || playingIndices[idx] === 1
+                    hoveredIndex === idx || playingIndices[idx] === 1 || playingIndices[idx] === 2
                       ? 0
                       : 1,
                   visibility:
-                    hoveredIndex === idx || playingIndices[idx] === 1
+                    hoveredIndex === idx || playingIndices[idx] === 1 || playingIndices[idx] === 2
                       ? 'hidden'
                       : 'visible',
                   transition:
-                    hoveredIndex === idx || playingIndices[idx] === 1
+                    hoveredIndex === idx || playingIndices[idx] === 1 || playingIndices[idx] === 2
                       ? 'none'
                       : 'opacity 0.2s ease-in-out',
                 }}
@@ -102,7 +102,7 @@ export const HoverEffect = ({
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>
               </div>
-              {(hoveredIndex === idx || playingIndices[idx] === 1) && (
+              {(hoveredIndex === idx || playingIndices[idx] === 1 || playingIndices[idx] === 2) && (
                 <div
                   className="absolute inset-0 flex items-center justify-center"
                   onClick={() => handlePlayPauseClick(idx)}  

@@ -8,6 +8,7 @@ import {
   IconPlayerPause,
   IconPlayerPlay,
   IconVolume,
+  IconWiper,
 } from '@tabler/icons-react'
 import { useAudio } from '@/components/AudioContext'
 
@@ -21,9 +22,20 @@ export default function Dock() {
       icon: (
         <IconPlayerPlay className="h-full w-full text-zinc-50 dark:text-neutral-300" />
       ),
-      onClick: () => null,
+      onClick: () => {
+        setPlayingIndices((prevIndices: { [key: number]: number }) => {
+          const updatedIndices: { [key: number]: number } = {}; // Create a new object to avoid direct mutation
+        
+          Object.keys(prevIndices).forEach((key) => {
+            if (prevIndices[Number(key)] === 2) {
+              updatedIndices[Number(key)] = 1; // Convert key to number and set value to 1 (playing)
+            } 
+          });
+        
+          return updatedIndices; 
+        });
+      }
     },
-
     {
       title: 'Pause',
       icon: (
@@ -31,13 +43,32 @@ export default function Dock() {
       ),
       onClick: () => {
         setPlayingIndices((prevIndices: { [key: number]: number }) => {
-          const updatedIndices: { [key: number]: number } = {}; // Create a new object to avoid direct mutation
+          const updatedIndices: { [key: number]: number } = {}; 
         
           Object.keys(prevIndices).forEach((key) => {
-            updatedIndices[Number(key)] = 0; // Convert key to number and set value to 0
+            if (prevIndices[Number(key)] === 1 || prevIndices[Number(key)] === 2) {
+              updatedIndices[Number(key)] = 2; // Convert key to number and set value to 2 (paused state)
+            }
           });
         
-          return updatedIndices; // Return the updated state
+          return updatedIndices; 
+        });
+      },
+    },
+    {
+      title: 'Clear',
+      icon: (
+        <IconWiper className="h-full w-full text-zinc-50 dark:text-neutral-300" />
+      ),
+      onClick: () => {
+        setPlayingIndices((prevIndices: { [key: number]: number }) => {
+          const updatedIndices: { [key: number]: number } = {}; 
+        
+          Object.keys(prevIndices).forEach((key) => {
+            updatedIndices[Number(key)] = 0; // Convert key to number and set value to 0 (default state)
+          });
+        
+          return updatedIndices; 
         });
       },
     },
