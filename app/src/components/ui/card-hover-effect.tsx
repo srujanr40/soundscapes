@@ -22,6 +22,7 @@ export const HoverEffect = ({
   masterVolume: number
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [volumes, setVolumes] = useState<number[]>(items.map(() => 1))
 
   // Refs for each audio element
   const audioRefs = useRef<HTMLAudioElement[]>([])
@@ -45,9 +46,21 @@ export const HoverEffect = ({
           audioElement.pause()
         }
       }
-      audioElement.volume = masterVolume
+      audioElement.volume = volumes[index] * masterVolume
     })
-  }, [playingIndices, masterVolume])
+  }, [playingIndices, masterVolume, volumes])
+
+  const handleVolumeChange = (index: number, volume: number) => {
+    setVolumes((prevVolumes) => {
+      const newVolumes = [...prevVolumes]
+      newVolumes[index] = volume
+      return newVolumes
+    })
+
+    if (audioRefs.current[index]) {
+      audioRefs.current[index].volume = volume * masterVolume
+    }
+  }
 
   return (
     <div
@@ -81,6 +94,7 @@ export const HoverEffect = ({
             )}
           </AnimatePresence>
           <Card
+            className='h-66'
             hovered={hoveredIndex === idx}
             backgroundImage={item.src}
             playing={playingIndices[idx] === 1 || playingIndices[idx] === 2}
@@ -115,11 +129,26 @@ export const HoverEffect = ({
                 playingIndices[idx] === 1 ||
                 playingIndices[idx] === 2) && (
                 <div
-                  className="absolute inset-0 flex items-center justify-center"
+                  className="absolute h-56 w-full mx-auto inset-0 flex items-center justify-center"
                   onClick={() => handlePlayPauseClick(idx)}
                 >
                   {playingIndices[idx] === 1 ? (
-                    <Pause size={48} className="text-white fill-current" />
+                    <div>
+                      <Pause size={48} className="text-white fill-current" />
+                      <div className="absolute bottom-0 left-4 flex w-60 bg-neutral-50 p-2 rounded-xl shadow-md">
+                        <input
+                          type="range"
+                          min="0"
+                          max="1"
+                          step="0.01"
+                          value={volumes[idx]}
+                          onChange={(e) =>
+                            handleVolumeChange(idx, parseFloat(e.target.value))
+                          }
+                          className="w-full"
+                        />
+                      </div>
+                    </div>
                   ) : (
                     <Play size={48} className="text-white fill-current" />
                   )}
@@ -172,7 +201,7 @@ export const Card = ({
           backgroundPosition: 'center',
         }}
       ></div>
-      <div className="relative z-50">
+      <div className="relative z-50 h-56">
         <div className="p-4">{children}</div>
       </div>
     </div>
