@@ -128,30 +128,36 @@ export const HoverEffect = ({
               {(hoveredIndex === idx ||
                 playingIndices[idx] === 1 ||
                 playingIndices[idx] === 2) && (
-                <div
-                  className="absolute h-56 w-full mx-auto inset-0 flex items-center justify-center"
-                  onClick={() => handlePlayPauseClick(idx)}
-                >
-                  {playingIndices[idx] === 1 ? (
-                    <div>
+                <div className="absolute h-56 w-full mx-auto inset-0 flex items-center justify-center">
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation() // Prevent event from bubbling up to the parent
+                      handlePlayPauseClick(idx)
+                    }}
+                  >
+                    {playingIndices[idx] === 1 ? (
                       <Pause size={48} className="text-white fill-current" />
-                      <div className="absolute bottom-0 left-4 flex w-60 bg-neutral-50 p-2 rounded-xl shadow-md">
-                        <input
-                          type="range"
-                          min="0"
-                          max="1"
-                          step="0.01"
-                          value={volumes[idx]}
-                          onChange={(e) => {
-                            e.stopPropagation()
-                            handleVolumeChange(idx, parseFloat(e.target.value))
-                          }}
-                          className="w-full"
-                        />
-                      </div>
+                    ) : (
+                      <Play size={48} className="text-white fill-current" />
+                    )}
+                  </div>
+                  {playingIndices[idx] === 1 && (
+                    <div
+                      className="absolute bottom-0 left-4 flex w-60 bg-neutral-50 p-2 rounded-xl shadow-md"
+                      onClick={(e) => e.stopPropagation()} // Ensure this doesn't trigger play/pause
+                    >
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value={volumes[idx]}
+                        onChange={(e) => {
+                          handleVolumeChange(idx, parseFloat(e.target.value))
+                        }}
+                        className="w-full"
+                      />
                     </div>
-                  ) : (
-                    <Play size={48} className="text-white fill-current" />
                   )}
                 </div>
               )}
