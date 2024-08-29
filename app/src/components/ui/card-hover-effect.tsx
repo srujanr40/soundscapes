@@ -94,7 +94,7 @@ export const HoverEffect = ({
             )}
           </AnimatePresence>
           <Card
-            className='h-66'
+            className="h-66"
             hovered={hoveredIndex === idx}
             backgroundImage={item.src}
             playing={playingIndices[idx] === 1 || playingIndices[idx] === 2}
@@ -142,9 +142,10 @@ export const HoverEffect = ({
                           max="1"
                           step="0.01"
                           value={volumes[idx]}
-                          onChange={(e) =>
+                          onChange={(e) => {
+                            e.stopPropagation()
                             handleVolumeChange(idx, parseFloat(e.target.value))
-                          }
+                          }}
                           className="w-full"
                         />
                       </div>
