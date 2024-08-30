@@ -1,6 +1,18 @@
 "use client"
 import { useAudio } from "../AudioContext";
 import { HoverEffect } from "../ui/card-hover-effect";
+import { getImage } from '../../utils/s3';
+
+export async function getServerSideProps() {
+  const image = await getImage('image-name.jpg');
+
+  return {
+    props: {
+      image,
+    },
+  };
+}
+
 
 
 export default function HoverCard() {
