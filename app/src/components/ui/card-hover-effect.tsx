@@ -65,7 +65,7 @@ export const HoverEffect = ({
   return (
     <div
       className={cn(
-        'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-10',
+        'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-flow-cols-4 py-10',
         className
       )}
     >
@@ -128,7 +128,7 @@ export const HoverEffect = ({
               {(hoveredIndex === idx ||
                 playingIndices[idx] === 1 ||
                 playingIndices[idx] === 2) && (
-                <div className="absolute h-56 w-full mx-auto inset-0 flex items-center justify-center">
+                <div className="absolute h-64 w-full mx-auto inset-0 flex items-center justify-center">
                   <div
                     onClick={(e) => {
                       e.stopPropagation() // Prevent event from bubbling up to the parent
@@ -143,7 +143,7 @@ export const HoverEffect = ({
                   </div>
                   {playingIndices[idx] === 1 && (
                     <div
-                      className="absolute bottom-0 left-4 flex w-60 bg-neutral-50 p-2 rounded-xl shadow-md"
+                      className="absolute bottom-0 self-center flex w-60 bg-gradient-to-br from-purple-300 via-pink-300 to-orange-300 dark:bg-gradient-to-br dark:from-purple-400 dark:via-pink-400 dark:to-orange-400 p-2 rounded-xl shadow-md"
                       onClick={(e) => e.stopPropagation()} // Ensure this doesn't trigger play/pause
                     >
                       <input
@@ -208,7 +208,7 @@ export const Card = ({
           backgroundPosition: 'center',
         }}
       ></div>
-      <div className="relative z-50 h-56">
+      <div className="relative z-50 h-64">
         <div className="p-4">{children}</div>
       </div>
     </div>

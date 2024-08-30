@@ -7,7 +7,7 @@ export default function HoverCard() {
   const { playingIndices, handlePlayPauseClick, setPlayingIndices, masterVolume, setMasterVolume } = useAudio()
 
   return (
-    <div className="max-w-5xl mx-auto px-8">
+    <div className="max-w-[90rem] mx-auto px-8">
       <HoverEffect items={projects} playingIndices={playingIndices} handlePlayPauseClick={handlePlayPauseClick} masterVolume={masterVolume}  />
     </div>
   );
