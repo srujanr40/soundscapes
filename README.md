@@ -27,7 +27,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Deployment
 
-Soundscapes is deployed on [Netlify](https://www.netlify.com/).
+Soundscapes is deployed and hosted on [Vercel](vercel.com).
 
 ## UI
 
