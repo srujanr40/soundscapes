@@ -10,7 +10,7 @@ Soundscapes is a web app that lets you create and listen to soundscapes. With mu
 
 ## Getting Started
 
-You want to run this app yourself? Great start! I applaud you, master of software, conqueror of code. Clone the repo, and run the following commands: 
+You want to run this app yourself? Great start! I applaud you, master of software, conqueror of code. You'll need `npm` and `node.js` installed beforehand as a prerequisite. Clone the repo, and run the following commands: 
 
 ```bash
 cd app
