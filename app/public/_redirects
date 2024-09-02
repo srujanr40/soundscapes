@@ -15,7 +15,7 @@
 /js/*            /app/public/js/:splat     200
 
 # Serve API routes correctly if used
-/api/*           /api/:splat               200
+/api/*           /app/.next/server/pages/api/:splat 200
 
 # Catch-all for any other routes not matched above
 /* /index.html 200
