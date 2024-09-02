@@ -26,7 +26,7 @@ function Navbar({ className }: { className?: string }) {
         <MenuItem setActive={setActive} active={active} item="Contact">
           <div className="flex flex-col space-y-4 text-sm">
             <HoveredLink href="https://srujanr40.github.io/personal_website/" target="_blank">Website</HoveredLink>
-            <HoveredLink href="https://github.com/srujanr40">GitHub</HoveredLink>
+            <HoveredLink href="https://github.com/srujanr40" target="_blank">GitHub</HoveredLink>
             <HoveredLink href="mailto:srujanr40@gmail.com">Email</HoveredLink>
           </div>
         </MenuItem>
@@ -34,7 +34,7 @@ function Navbar({ className }: { className?: string }) {
           <div className="text-sm p-4">
             <ProductItem
               title="Want to hear more?"
-              href="https://algochurn.com"
+              href="#"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlVTWL4dqk9ZokaiRQe0kdV3_dNvkB7A3xTw&s"
               description="Send me suggestions for sounds that you would like to hear on Soundscapes"
             />
