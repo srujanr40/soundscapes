@@ -68,21 +68,23 @@ const FloatingDockMobile = ({
               >
                 <div
                   key={item.title}
-                  className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 flex items-center justify-center"
+                  className="h-16 w-16 rounded-full bg-gradient-to-br from-purple-500 via-pink-400 to-orange-200 flex items-center justify-center"
+                  onClick={item.onClick}
                 >
-                  <div className="h-4 w-4">{item.icon}</div>
+                  <div className="h-6 w-6">{item.icon}</div>
                 </div>
               </motion.div>
             ))}
           </motion.div>
         )}
       </AnimatePresence>
-      <button
-        onClick={() => setOpen(!open)}
-        className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-800 flex items-center justify-center"
-      >
-        <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
-      </button>
+      <motion.button
+      onClick={() => setOpen(!open)}
+      className="h-16 w-16 rounded-full bg-gradient-to-tr from-purple-500 via-pink-400 to-orange-200 flex items-center justify-center"
+      whileTap={{ scale: 0.9, transition: { type: "spring", stiffness: 400, damping: 10 } }} // Bounce effect
+    >
+      <IconLayoutNavbarCollapse className="h-6 w-6 text-neutral-100 dark:text-neutral-200" />
+    </motion.button>
     </div>
   );
 };
@@ -100,7 +102,7 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto hidden md:flex h-16 gap-4 items-end  rounded-2xl bg-gradient-to-tr from-purple-500 via-pink-400 to-orange-200 dark:bg-neutral-900 px-4 pb-3",
+        "mx-auto hidden md:flex h-16 gap-4 items-end  rounded-2xl bg-gradient-to-tr from-purple-500 via-pink-400 to-orange-200 px-4 pb-3",
         className
       )}
     >
