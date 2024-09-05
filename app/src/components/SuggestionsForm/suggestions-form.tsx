@@ -12,7 +12,7 @@ export default function SuggestionsForm({ closeModal }: { closeModal: () => void
     e.preventDefault()
 
     try {
-      const res = await fetch('/api/submitSuggestion', {
+      const res = await fetch('/api/submit-suggestion', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,10 +22,6 @@ export default function SuggestionsForm({ closeModal }: { closeModal: () => void
           suggestion,
         }),
       })
-
-      if (res.ok) {
-        console.log('Thank you for your suggestion!')
-      }
     } catch (error) {
       console.error('Error submitting suggestion:', error)
     }
