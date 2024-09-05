@@ -94,7 +94,7 @@ function Navbar({ className }: { className?: string }) {
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
         >
           <div className="rounded-lg shadow-lg z-60" ref={formRef}>
-            <SuggestionsForm handleSubmit={() => setIsSuggestionsFormVisible(false)} />
+            <SuggestionsForm closeModal={() => setIsSuggestionsFormVisible(false)} />
           </div>
         </div>
       )}

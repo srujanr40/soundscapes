@@ -4,7 +4,34 @@ import { Label } from '../ui/label'
 import { Input, Textarea } from '../ui/input'
 import { cn } from '@/lib/utils'
 
-export default function SuggestionsForm({ handleSubmit }: { handleSubmit: () => void }) {
+export default function SuggestionsForm({ closeModal }: { closeModal: () => void }) {
+  const [email, setEmail] = React.useState('')
+  const [suggestion, setSuggestion] = React.useState('')
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    try {
+      const res = await fetch('/api/submitSuggestion', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          suggestion,
+        }),
+      })
+
+      if (res.ok) {
+        console.log('Thank you for your suggestion!')
+      }
+    } catch (error) {
+      console.error('Error submitting suggestion:', error)
+    }
+
+    closeModal()
+  }
 
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
@@ -18,18 +45,18 @@ export default function SuggestionsForm({ handleSubmit }: { handleSubmit: () => 
       <form className="my-8" onSubmit={handleSubmit}>
         <LabelInputContainer className="mb-4">
           <Label>Email Address (optional)</Label>
-          <Input id="email" placeholder="address@email.com" type='email' />
+          <Input id="email" placeholder="address@email.com" type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="text">Suggestion</Label>
-          <Textarea id="suggestions" placeholder="Please add the sound of chalk on chalkboards. The screeching pain puts me right to sleep, I love it!" rows={6}/>
+          <Textarea id="suggestions" placeholder="Please add the sound of chalk on chalkboards. The screeching pain puts me right to sleep, I love it!" rows={6} value={suggestion} onChange={(e) => setSuggestion(e.target.value)} />
         </LabelInputContainer>
 
         <button
           className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
           type="submit"
         >
-          WIP (Non-functional) &rarr;
+          Submit &rarr;
           <BottomGradient />
         </button>
       </form>
