@@ -36,17 +36,19 @@ export const HoverEffect = ({
   }, [])
 
   useEffect(() => {
-    // Play or pause the respective audio element based on playingIndices state
     items.forEach((_, index) => {
       const audioElement = audioRefs.current[index]
       if (audioElement) {
+        audioElement.loop = true
+
         if (playingIndices[index] === 1) {
           audioElement.play()
         } else {
           audioElement.pause()
         }
+        
+        audioElement.volume = volumes[index] * masterVolume
       }
-      audioElement.volume = volumes[index] * masterVolume
     })
   }, [playingIndices, masterVolume, volumes])
 
